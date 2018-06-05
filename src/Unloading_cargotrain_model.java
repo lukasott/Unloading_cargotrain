@@ -39,7 +39,9 @@ public class Unloading_cargotrain_model extends Model{
     }
     
     protected ProcessQueue<TrainProcess> trainQueue;
-	protected ProcessQueue<TerminalProcess> terminalQueue;
+	protected ProcessQueue<TerminalProcess> terminalWaitingQueue;
+	protected ProcessQueue<TerminalProcess> terminalUnloadingQueue;
+	protected ProcessQueue<TerminalProcess> terminalInterruptedQueue;
 	
     public Unloading_cargotrain_model(Model owner, String name, boolean showInReport, boolean showIntrace){
     	super(owner, name, showInReport, showIntrace);
@@ -47,8 +49,8 @@ public class Unloading_cargotrain_model extends Model{
 
     @Override
     public String description(){
-    	return "Unloading_cargotrain: process oriented model, trains arrive at a terminal and are queued up. When the terminal is"
-    			+ "available the train moves to the terminal and gets unloading by the train staff. When the train staff have"
+    	return "Unloading_cargotrain: process oriented model, trains arrive at a terminal and are queued up. When the terminal is "
+    			+ "available the train moves to the terminal and gets unloaded by the train staff. When the train staff have "
     			+ "reached their maximum working hours, they stop unloading and send replacement staff.";
     }
     
@@ -77,7 +79,9 @@ public class Unloading_cargotrain_model extends Model{
 		
 		// queues
 		trainQueue = new ProcessQueue<TrainProcess>(this, "FIFO queue for trains",true, true);
-		terminalQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals",true, true);
+		terminalWaitingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for waiting terminals",true, true);
+		terminalUnloadingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals unloading cargotrains", true, true);
+		terminalInterruptedQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals interrupted while unloading", true, true);
     }
  
     public static void main(String[] args){

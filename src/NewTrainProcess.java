@@ -19,13 +19,16 @@ public class NewTrainProcess extends SimProcess{
 	@Override
 	public void lifeCycle() throws SuspendExecution{
 		while(true){
-			    	
+
+			// get arrival interval and wait for next train
 			hold(new TimeSpan(model.getTrainArrivalTime()));
- 
+
+			// create train and staff
 			TrainProcess newTrain = new TrainProcess(model, "train", true/*, model.getStaffWorkingHours()*/);
 			StaffProcess newStaff = new StaffProcess(model, "staff", true, model.getRemainingWorkingHours(), newTrain);
 			newTrain.setAssignedStaff(newStaff);
 
+			// activate train and staff
 			newTrain.activateAfter(this);
 			newStaff.activateAfter(this);
 		}

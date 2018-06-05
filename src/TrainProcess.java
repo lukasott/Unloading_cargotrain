@@ -9,10 +9,9 @@ import co.paralleluniverse.fibers.SuspendExecution;
 public class TrainProcess extends SimProcess{
 
 	private Unloading_cargotrain_model model;
-	//private double staffWorkingHours;
-	//private boolean staffAtWork = true;
 	private StaffProcess assignedStaff;
 	private int staffChanges = 0;
+	private boolean doneUnloading = false;
 	
 	public StaffProcess getAssignedStaff(){
 		return assignedStaff;
@@ -26,31 +25,31 @@ public class TrainProcess extends SimProcess{
 		staffChanges++;
 	}
 	
-//	public double getStaffWorkingHours(){
-//		return staffWorkingHours;
-//	}
-//	
-//	public boolean getStaffAtWork(){
-//		return staffAtWork;
-//	}
+	public boolean getDoneUnloading(){
+		return doneUnloading;
+	}
 	
-	public TrainProcess(Model owner, String name, boolean showInTrace/*, double hours*/){
+	public void setDoneUnloading(){
+		doneUnloading = true;
+	}
+	
+	public TrainProcess(Model owner, String name, boolean showInTrace){
 		super(owner, name, showInTrace);
 		
 		model = (Unloading_cargotrain_model) owner;
-		//staffWorkingHours = hours;
 	}
 	
 	@Override
 	public void lifeCycle() throws SuspendExecution{
 	
+		// train queues up
 		model.trainQueue.insert(this);
 		sendTraceNote("Queue length: " + model.trainQueue.length());
 		
-		if (!model.terminalQueue.isEmpty()) {
+		if (!model.terminalWaitingQueue.isEmpty()) {
 			// next train goes to terminal
-			TerminalProcess terminal = model.terminalQueue.first();
-			model.terminalQueue.remove(terminal);
+			TerminalProcess terminal = model.terminalWaitingQueue.first();
+			model.terminalWaitingQueue.remove(terminal);
 			
 			terminal.activateAfter(this);
 			
@@ -59,15 +58,15 @@ public class TrainProcess extends SimProcess{
 		}else{
 			// train waits in queue
 			passivate();
-			
-//			while(this.getActivatedBy() != model.terminalQueue.first()){
-//				hold(new TimeSpan(model.getStaffHours() - staffWorkingHours));
-//				hold(new TimeSpan(model.getStaffReplacmentTime()));
-//				staffWorkingHours = 0;
-//			}
 		}
 		
 		// train leaves
+		setDoneUnloading();
+		
+		// cancel scheduled events for the assigned staff and activate them now,
+		// so they terminate the same time as their assigned train
+		assignedStaff.cancel();
+		assignedStaff.activate();
 		sendTraceNote("Train is unloaded and leaves terminal");
 	}
 }

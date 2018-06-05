@@ -9,14 +9,14 @@
 <p></p><h2><div align="center">Unloading of cargotrain Report</div></h2><p></p><div align="center"><h3>Model Unloading of cargotrain model</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Description</div></b></td></tr>
-<tr valign="top"><td>Unloading_cargotrain: process oriented model, trains arrive at a terminal and are queued up. When the terminal isavailable the train moves to the terminal and gets unloading by the train staff. When the train staff havereached their maximum working hours, they stop unloading and send replacement staff.</td></tr>
+<tr valign="top"><td>Unloading_cargotrain: process oriented model, trains arrive at a terminal and are queued up. When the terminal is available the train moves to the terminal and gets unloaded by the train staff. When the train staff have reached their maximum working hours, they stop unloading and send replacement staff.</td></tr>
 </table><p></p>
 <font size="-1"><a href="#top">top</a></font><p></p>
 <hr><div align="center"><h3>Simulation Run</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Property</div></b></td><td><b><div align="left">Content</div></b></td></tr>
 <tr valign="top"></tr>
-<tr valign="top"><td>Simulation duration</td><td>Experiment run from 0.0000 until 28.0094.</td></tr>
+<tr valign="top"><td>Simulation duration</td><td>Experiment run from 0.0000 until 720.0000.</td></tr>
 <tr valign="top"><td>Computation duration (HH:MM:SS)</td><td>00:00:00</td></tr>
 <tr valign="top"><td>Resets</td><td>No resets during the experiment run.</td></tr>
 <tr valign="top"><td>Seed</td><td>979</td></tr>
@@ -26,18 +26,20 @@
 <hr><div align="center"><h3>Queues</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Title</div></b></td><td><b><div align="left">Qorder</div></b></td><td><b><div align="left">(Re)set</div></b></td><td><b><div align="left">Obs</div></b></td><td><b><div align="left">QLimit</div></b></td><td><b><div align="left">Qmax</div></b></td><td><b><div align="left">Qnow</div></b></td><td><b><div align="left">Qavg.</div></b></td><td><b><div align="left">Zeros</div></b></td><td><b><div align="left">max.Wait</div></b></td><td><b><div align="left">avg.Wait</div></b></td><td><b><div align="left">refus.</div></b></td></tr>
-<tr valign="top"><td>FIFO queue for trains</td><td>FIFO</td><td>0.0000</td><td>1</td><td>unlimit.</td><td>1</td><td>0</td><td>0.0</td><td>1</td><td>0.0000</td><td>0.0000</td><td>0</td></tr>
-<tr valign="top"><td>FIFO queue for terminals</td><td>FIFO</td><td>0.0000</td><td>1</td><td>unlimit.</td><td>1</td><td>0</td><td>0.79191</td><td>0</td><td>22.1810</td><td>22.1810</td><td>0</td></tr>
+<tr valign="top"><td>FIFO queue for trains</td><td>FIFO</td><td>0.0000</td><td>80</td><td>unlimit.</td><td>3</td><td>0</td><td>0.21553</td><td>43</td><td>12.3893</td><td>1.9397</td><td>0</td></tr>
+<tr valign="top"><td>FIFO queue for waiting terminals</td><td>FIFO</td><td>0.0000</td><td>48</td><td>unlimit.</td><td>1</td><td>1</td><td>0.51464</td><td>0</td><td>23.0646</td><td>7.4873</td><td>0</td></tr>
+<tr valign="top"><td>FIFO queue for terminals unloading cargotrains</td><td>FIFO</td><td>0.0000</td><td>90</td><td>unlimit.</td><td>1</td><td>0</td><td>0.44356</td><td>0</td><td>4.4928</td><td>3.5485</td><td>0</td></tr>
+<tr valign="top"><td>FIFO queue for terminals interrupted while unloading</td><td>FIFO</td><td>0.0000</td><td>10</td><td>unlimit.</td><td>1</td><td>0</td><td>0.0418</td><td>0</td><td>3.4905</td><td>3.0096</td><td>0</td></tr>
 </table><p></p>
 <font size="-1"><a href="#top">top</a></font><p></p>
 <hr><div align="center"><h3>Distributions</h3></div>
 <table border="0" cellspacing="0" cellpadding="3" width="100%">
 <tr valign="top"><td><b><div align="left">Title</div></b></td><td><b><div align="left">(Re)set</div></b></td><td><b><div align="left">Obs</div></b></td><td><b><div align="left">Type</div></b></td><td><b><div align="left">Parameter 1</div></b></td><td><b><div align="left">Parameter 2</div></b></td><td><b><div align="left">Parameter 3</div></b></td><td><b><div align="left">Seed</div></b></td></tr>
-<tr valign="top"><td>Unload time</td><td>0.0000</td><td>1</td><td>Cont Uniform</td><td>2.5</td><td>3.5</td><td> </td><td>68994544</td></tr>
-<tr valign="top"><td>staff working hours when they arrive</td><td>0.0000</td><td>1</td><td>Cont Uniform</td><td>6.0</td><td>11.0</td><td> </td><td>3916028</td></tr>
-<tr valign="top"><td>staff replacement time</td><td>0.0000</td><td>1</td><td>Cont Uniform</td><td>2.5</td><td>3.5</td><td> </td><td>39685667</td></tr>
-<tr valign="top"><td>Arrival time </td><td>0.0000</td><td>2</td><td>Cont Exponential</td><td>10.0</td><td> </td><td> </td><td>9829105</td></tr>
+<tr valign="top"><td>Unload time</td><td>0.0000</td><td>80</td><td>Cont Uniform</td><td>3.5</td><td>4.5</td><td> </td><td>68994544</td></tr>
+<tr valign="top"><td>remaining working hours when they arrive</td><td>0.0000</td><td>80</td><td>Cont Uniform</td><td>6.0</td><td>11.0</td><td> </td><td>3916028</td></tr>
+<tr valign="top"><td>staff replacement time</td><td>0.0000</td><td>15</td><td>Cont Uniform</td><td>2.5</td><td>3.5</td><td> </td><td>39685667</td></tr>
+<tr valign="top"><td>Arrival time </td><td>0.0000</td><td>81</td><td>Cont Exponential</td><td>10.0</td><td> </td><td> </td><td>9829105</td></tr>
 </table><p></p>
 <font size="-1"><a href="#top">top</a></font><p></p>
-<font size="-2">created using <a href="http://www.desmoj.de">DESMO-J</A> Version 2.5.1e at Fri May 18 15:18:20 CEST 2018 - DESMO-J is licensed under <A HREF=http://www.apache.org/licenses/LICENSE-2.0>Apache License, Version 2.0</A></font>
+<font size="-2">created using <a href="http://www.desmoj.de">DESMO-J</A> Version 2.5.1e at Tue Jun 05 17:00:44 CEST 2018 - DESMO-J is licensed under <A HREF=http://www.apache.org/licenses/LICENSE-2.0>Apache License, Version 2.0</A></font>
 </body></html>
