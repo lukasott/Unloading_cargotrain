@@ -9,6 +9,7 @@ import desmoj.core.dist.*;
 public class Unloading_cargotrain_model extends Model{
 	
 	private final int STAFFHOURS = 12;
+	public double trainTime = 0;
 	
 	public int getStaffHours(){
 		return STAFFHOURS;
@@ -42,6 +43,11 @@ public class Unloading_cargotrain_model extends Model{
 	protected ProcessQueue<TerminalProcess> terminalWaitingQueue;
 	protected ProcessQueue<TerminalProcess> terminalUnloadingQueue;
 	protected ProcessQueue<TerminalProcess> terminalInterruptedQueue;
+	protected ProcessQueue<TrainProcess> trainInSystem;
+	
+	protected ProcessQueue<TrainProcess> NoneStaffChange;
+	protected ProcessQueue<TrainProcess> OneStaffChange;
+	protected ProcessQueue<TrainProcess> TwoStaffChange;
 	
     public Unloading_cargotrain_model(Model owner, String name, boolean showInReport, boolean showIntrace){
     	super(owner, name, showInReport, showIntrace);
@@ -82,6 +88,11 @@ public class Unloading_cargotrain_model extends Model{
 		terminalWaitingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for waiting terminals",true, true);
 		terminalUnloadingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals unloading cargotrains", true, true);
 		terminalInterruptedQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals interrupted while unloading", true, true);
+		trainInSystem = new ProcessQueue<TrainProcess>(this, "Trains in the System", true, true);
+		
+		NoneStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with no staff change", true, true);
+		OneStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with one staff change", true, true);
+		TwoStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with two staff change", true, true);
     }
  
     public static void main(String[] args){
@@ -89,17 +100,20 @@ public class Unloading_cargotrain_model extends Model{
 		Experiment experiment = new Experiment("Unloading of cargotrain");
 		Unloading_cargotrain_model model = new Unloading_cargotrain_model(null, "Unloading of cargotrain model", true, true);  
 		
+		experiment.setSeedGenerator(42);
+		
 		model.connectToExperiment(experiment);
 		
 		experiment.tracePeriod(new TimeInstant(0.0), new TimeInstant(24*30));
 		experiment.debugPeriod(new TimeInstant(0.0), new TimeInstant(24*30));
 		
-		experiment.stop(new TimeInstant(24*30));	// 1 month
+		experiment.stop(new TimeInstant(24*30*12));	// 1 year
 		
 		experiment.start(); 
 		
 		experiment.report();
 		
 		experiment.finish();
+
     }
 }

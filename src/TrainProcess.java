@@ -41,6 +41,7 @@ public class TrainProcess extends SimProcess{
 	
 	@Override
 	public void lifeCycle() throws SuspendExecution{
+		model.trainInSystem.insert(this);
 	
 		// train queues up
 		model.trainQueue.insert(this);
@@ -62,6 +63,19 @@ public class TrainProcess extends SimProcess{
 		
 		// train leaves
 		setDoneUnloading();
+		
+		model.trainInSystem.remove(this);
+		
+		if(staffChanges == 0) {
+			model.NoneStaffChange.insert(this);
+		}
+		if(staffChanges == 1) {
+			model.OneStaffChange.insert(this);
+		}
+		if(staffChanges == 2) {
+			model.TwoStaffChange.insert(this);
+		}
+		
 		
 		// cancel scheduled events for the assigned staff and activate them now,
 		// so they terminate the same time as their assigned train
