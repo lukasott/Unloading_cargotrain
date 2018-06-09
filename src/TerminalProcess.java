@@ -9,7 +9,16 @@ import co.paralleluniverse.fibers.SuspendExecution;
 public class TerminalProcess extends SimProcess{
 
 	private Unloading_cargotrain_model model;
+	private TrainProcess assignedTrain = null;
+	
+	public TrainProcess getAssignedTrain(){
+		return assignedTrain;
+	}
 
+	public void setAssignedTrain(TrainProcess train){
+		assignedTrain = train;
+	}
+	
 	public TerminalProcess(Model owner, String name, boolean showInTrace){
 		super(owner, name, showInTrace);
 	
@@ -34,6 +43,7 @@ public class TerminalProcess extends SimProcess{
 					
 					// train staff is working, unload train
 					model.trainQueue.remove(train);
+					train.setAssignedTerminal(this);
 					
 					model.terminalWaitingQueue.remove(this);
 					model.terminalUnloadingQueue.insert(this);
@@ -43,6 +53,7 @@ public class TerminalProcess extends SimProcess{
 					
 					// unloading is done, signal train to leave
 					model.terminalUnloadingQueue.remove(this);
+					train.setAssignedTerminal(null);
 					train.activate(new TimeSpan(0.0));
 				}else{
 					// train staff isn't working, waiting on replacement staff

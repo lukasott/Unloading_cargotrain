@@ -70,6 +70,8 @@ public class Unloading_cargotrain_model extends Model{
 		         
 		TerminalProcess terminal = new TerminalProcess(this, "terminal", true);
 		terminal.activate(new TimeSpan(0.0));
+//		TerminalProcess terminal2 = new TerminalProcess(this, "terminal", true);
+//		terminal2.activate(new TimeSpan(0.0));
     }
 
     @Override
@@ -93,7 +95,7 @@ public class Unloading_cargotrain_model extends Model{
 		// used for statistics
 		trainInSystem = new ProcessQueue<TrainProcess>(this, "Trains in the System", true, true);
 		noStaffChanges = new Count(this, "# trains with no staff changes", true, true);
-		oneStaffChange = new Count(this, "# trains with one staff changes", true, true);
+		oneStaffChange = new Count(this, "# trains with one staff change", true, true);
 		twoStaffChanges = new Count(this, "# trains with two staff changes", true, true);
 		
     }
@@ -103,11 +105,12 @@ public class Unloading_cargotrain_model extends Model{
 		Experiment experiment = new Experiment("Unloading of cargotrain");
 		Unloading_cargotrain_model model = new Unloading_cargotrain_model(null, "Unloading of cargotrain model", true, true);  
 		
-		experiment.setSeedGenerator(42);
+		experiment.setSeedGenerator(74189762);
+		experiment.setShowProgressBar(false);
 		
 		model.connectToExperiment(experiment);
 		
-		experiment.tracePeriod(new TimeInstant(0.0), new TimeInstant(24*30));
+		experiment.tracePeriod(new TimeInstant(0.0), new TimeInstant(24*30*12));
 		experiment.debugPeriod(new TimeInstant(0.0), new TimeInstant(24*30));
 		
 		experiment.stop(new TimeInstant(24*30*12));	// 1 year

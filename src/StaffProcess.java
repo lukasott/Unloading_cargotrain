@@ -31,9 +31,9 @@ public class StaffProcess extends SimProcess{
 		if(!assignedTrain.getDoneUnloading()){
 			
 			// interrupt unloading process
-			if(!model.trainQueue.contains(assignedTrain) && !model.terminalUnloadingQueue.isEmpty()){
+			if(!model.trainQueue.contains(assignedTrain) && assignedTrain.getAssignedTerminal() != null /*!model.terminalUnloadingQueue.isEmpty()*/){
 				
-				TerminalProcess terminal = model.terminalUnloadingQueue.first();
+				TerminalProcess terminal = assignedTrain.getAssignedTerminal();
 				model.terminalUnloadingQueue.remove(terminal);
 				model.terminalInterruptedQueue.insert(terminal);
 				
@@ -58,9 +58,9 @@ public class StaffProcess extends SimProcess{
 			assignedTrain.incrementStaffChanges();
 			
 			// continue unloading
-			if(!model.trainQueue.contains(assignedTrain) && !model.terminalInterruptedQueue.isEmpty()){
+			if(!model.trainQueue.contains(assignedTrain) && assignedTrain.getAssignedTerminal() != null /*!model.terminalInterruptedQueue.isEmpty()*/){
 				
-				TerminalProcess terminal = model.terminalInterruptedQueue.first();
+				TerminalProcess terminal = assignedTrain.getAssignedTerminal();
 				model.terminalInterruptedQueue.remove(terminal);
 				model.terminalUnloadingQueue.insert(terminal);
 				
@@ -75,6 +75,5 @@ public class StaffProcess extends SimProcess{
 		// activate waiting terminal if train is the first in the queue
 		if(!model.terminalWaitingQueue.isEmpty() && model.trainQueue.first() != null && model.trainQueue.first().equals(assignedTrain))
 			model.terminalWaitingQueue.first().activate(new TimeSpan(0.0));
-		
 	}
 }

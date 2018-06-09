@@ -10,6 +10,7 @@ public class TrainProcess extends SimProcess{
 
 	private Unloading_cargotrain_model model;
 	private StaffProcess assignedStaff;
+	private TerminalProcess assignedTerminal = null;
 	private int staffChanges = 0;
 	private boolean doneUnloading = false;
 	
@@ -19,6 +20,14 @@ public class TrainProcess extends SimProcess{
 	
 	public void setAssignedStaff(StaffProcess staff){
 		assignedStaff = staff;
+	}
+	
+	public TerminalProcess getAssignedTerminal(){
+		return assignedTerminal;
+	}
+	
+	public void setAssignedTerminal(TerminalProcess terminal){
+		assignedTerminal = terminal;
 	}
 	
 	public void incrementStaffChanges(){
@@ -51,6 +60,7 @@ public class TrainProcess extends SimProcess{
 			// next train goes to terminal
 			TerminalProcess terminal = model.terminalWaitingQueue.first();
 			model.terminalWaitingQueue.remove(terminal);
+			//terminal.setAssignedTrain(this);
 			
 			terminal.activateAfter(this);
 			

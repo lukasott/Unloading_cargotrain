@@ -24,7 +24,7 @@ public class NewTrainProcess extends SimProcess{
 			hold(new TimeSpan(model.getTrainArrivalTime()));
 
 			// create train and staff
-			TrainProcess newTrain = new TrainProcess(model, "train", true/*, model.getStaffWorkingHours()*/);
+			TrainProcess newTrain = new TrainProcess(model, "train", true);
 			StaffProcess newStaff = new StaffProcess(model, "staff", true, model.getRemainingWorkingHours(), newTrain);
 			newTrain.setAssignedStaff(newStaff);
 
