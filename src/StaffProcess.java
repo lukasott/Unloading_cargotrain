@@ -11,7 +11,6 @@ public class StaffProcess extends SimProcess{
 	private Unloading_cargotrain_model model;
 	private double remainingWorkingHours;
 	private TrainProcess assignedTrain;
-	private int counter;
 	
 	public StaffProcess(Model owner, String name, boolean showInTrace, double remainingWorkingHours, TrainProcess assignedTrain){
 		super(owner, name, showInTrace);

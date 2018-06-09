@@ -66,21 +66,21 @@ public class TrainProcess extends SimProcess{
 		
 		model.trainInSystem.remove(this);
 		
-		if(staffChanges == 0) {
-			model.NoneStaffChange.insert(this);
-		}
-		if(staffChanges == 1) {
-			model.OneStaffChange.insert(this);
-		}
-		if(staffChanges == 2) {
-			model.TwoStaffChange.insert(this);
-		}
-		
-		
 		// cancel scheduled events for the assigned staff and activate them now,
 		// so they terminate the same time as their assigned train
 		assignedStaff.cancel();
 		assignedStaff.activate();
 		sendTraceNote("Train is unloaded and leaves terminal");
+		
+		// update statistics
+		if(staffChanges == 0) {
+			model.noStaffChanges.update();
+		}
+		if(staffChanges == 1) {
+			model.oneStaffChange.update();
+		}
+		if(staffChanges == 2) {
+			model.twoStaffChanges.update();
+		}
 	}
 }

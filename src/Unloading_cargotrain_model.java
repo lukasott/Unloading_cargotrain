@@ -1,4 +1,5 @@
 import desmoj.core.simulator.*;
+import desmoj.core.statistic.Count;
 import desmoj.core.dist.*;
 
 /**
@@ -43,11 +44,11 @@ public class Unloading_cargotrain_model extends Model{
 	protected ProcessQueue<TerminalProcess> terminalWaitingQueue;
 	protected ProcessQueue<TerminalProcess> terminalUnloadingQueue;
 	protected ProcessQueue<TerminalProcess> terminalInterruptedQueue;
-	protected ProcessQueue<TrainProcess> trainInSystem;
 	
-	protected ProcessQueue<TrainProcess> NoneStaffChange;
-	protected ProcessQueue<TrainProcess> OneStaffChange;
-	protected ProcessQueue<TrainProcess> TwoStaffChange;
+	protected ProcessQueue<TrainProcess> trainInSystem;
+	protected Count noStaffChanges;
+	protected Count oneStaffChange;
+	protected Count twoStaffChanges;
 	
     public Unloading_cargotrain_model(Model owner, String name, boolean showInReport, boolean showIntrace){
     	super(owner, name, showInReport, showIntrace);
@@ -88,11 +89,13 @@ public class Unloading_cargotrain_model extends Model{
 		terminalWaitingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for waiting terminals",true, true);
 		terminalUnloadingQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals unloading cargotrains", true, true);
 		terminalInterruptedQueue = new ProcessQueue<TerminalProcess>(this, "FIFO queue for terminals interrupted while unloading", true, true);
-		trainInSystem = new ProcessQueue<TrainProcess>(this, "Trains in the System", true, true);
 		
-		NoneStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with no staff change", true, true);
-		OneStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with one staff change", true, true);
-		TwoStaffChange = new ProcessQueue<TrainProcess>(this, "Trains with two staff change", true, true);
+		// used for statistics
+		trainInSystem = new ProcessQueue<TrainProcess>(this, "Trains in the System", true, true);
+		noStaffChanges = new Count(this, "# trains with no staff changes", true, true);
+		oneStaffChange = new Count(this, "# trains with one staff changes", true, true);
+		twoStaffChanges = new Count(this, "# trains with two staff changes", true, true);
+		
     }
  
     public static void main(String[] args){
